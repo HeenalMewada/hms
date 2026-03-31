@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+<style>
+ .sidebar {
+  width: 220px;
+  min-height: 100vh;
+  background-color: #f8f9fa;
+  position: fixed;
+}
+#navbar a {
+text-decoration: none;
+}
+ 
+</style>
+</head>
+
+
+<body>
+  <div class="d-flex">
+
+    <div class="sidebar">
+      <div class="text-left py-4 border-bottom">
+
+        <a class="navbar-brand" href="#">
+          <img
+            src="data:image/png;base64,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"
+            class="img-fluid" width="50" height="50">
+        Welcome  </a>
+      </div>
+      <!-- <div class="d-flex align-items-center gap-3">
+    <i class="fa-regular fa-bell" style="height: 25px;"></i> 
+    </div>
+</div> -->
+<div id="sidebar-container">
+      <div class="d-flex flex-column mt-3 gap-3" id="navbar" >
+        <a href="#"><i class="fa-solid fa-chart-line me-2"></i> Dashboard</a>
+        <a href="./book.html"><i class="fa-solid fa-user me-2"></i> Book Appointment</a>
+        <a href="./myAppoint.html"><i class="fa-solid fa-users me-2"></i>My Appointments</a>
+        <!-- <a href="./doctor.html"><i class="fa-solid fa-calendar-check me-2"></i> Doctors</a> -->
+        <a href="./medical.html"><i class="fa-solid fa-prescription me-2"></i> Medical Reports</a>
+        <a href="./prescription.html"><i class="fa-solid fa-gear me-2"></i> Prescriptions</a>
+        <a href="#" onclick=" logout(); return false;"      class="text-danger"><i class="fa-solid fa-right-from-bracket me-2"></i> Logout</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container" style="margin-top: 100px;margin-left: 220px;"> 
+      <div class="row g-3">
+        <div class="col-md-3">
+          <div class="card h-100">
+            <div class="card-body text-center">
+              <i class="fas fa-users fa-3x mb-3 text-primary"></i>
+              <!-- <img src="./crowd.png" alt="" class="3x mb-3"> -->
+              
+              <p class="card-text fw-bold"></p>
+              <h5 class="card-title text-muted" id="upcoming-count"></h5>
+              <h5>Upcoming Appointments</h5>
+              
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card h-100">
+            <div class="card-body text-center">
+              <i class="fas fa-calendar-check fa-3x mb-3 text-success"></i>
+              
+              <p class="card-text fw-bold"></p>
+              <h5 class="card-title text-muted " id="total-count"></h5>
+              <h5>Total Appointments</h5>
+             
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card h-100">
+            <div class="card-body text-center">
+              <i class="fas fa-clock fa-3x mb-3 text-warning"></i>
+           
+              <p class="card-text fw-bold"></p>
+                 <h5 class="card-title text-muted" id="last-visit"></h5>
+                 <h5>Last Visit</h5>
+              
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card h-100">
+
+            <div class="card-body text-center">
+              <i class="fa-solid fa-prescription fa-3x mb-3 text-info"></i>
+
+              
+              <p class="card-text fw-bold"> </p>
+              <h5 class="card-title text-muted "  id="doctors-consulted"></h5>
+              <h5>Doctor Consulted</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+
+</body>
+<script>
+  function logout(){
+     window.location.href = '../login.html';
+  }
+let appointments = JSON.parse(localStorage.getItem("appointments")) || [];
+
+let today = new Date().toISOString().split("T")[0];
+
+let upcoming = appointments.filter(app => app.date >= today);
+let past = appointments.filter(app => app.date < today);
+
+// Total Appointments
+document.getElementById("total-count").innerText = appointments.length;
+
+// Upcoming Appointments
+document.getElementById("upcoming-count").innerText = upcoming.length;
+
+// Last Visit (latest past date)
+if (past.length > 0) {
+    let last = past.sort((a, b) => b.date.localeCompare(a.date))[0];
+    document.getElementById("last-visit").innerText = last.date;
+} else {
+    document.getElementById("last-visit").innerText = "No visits yet";
+}
+
+// Unique Doctors Count
+let doctors = [...new Set(appointments.map(app => app.doctor_name))];
+document.getElementById("doctors-consulted").innerText = doctors.length;
+
+
+</script>
+
+</html>

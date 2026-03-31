@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Medical Reports</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div class="container mt-4">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h4>Medical Reports</h4>
+        </div>
+
+        <div class="card-body">
+
+            <!-- Upload Form -->
+            <div class="row g-3 mb-4">
+                <div class="col-md-3">
+                    <input type="text" id="reportName" class="form-control" placeholder="Report Name">
+                </div>
+
+                <div class="col-md-3">
+                    <input type="text" id="doctorName" class="form-control" placeholder="Doctor Name">
+                </div>
+
+                <div class="col-md-3">
+                    <input type="date" id="reportDate" class="form-control">
+                </div>
+
+                <div class="col-md-3">
+                    <button class="btn btn-success w-100" onclick="addReport()">Upload Report</button>
+                </div>
+            </div>
+
+            <!-- Reports Table -->
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped text-center">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Report Name</th>
+                            <th>Doctor</th>
+                            <th>Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="reportTable">
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+let reports = JSON.parse(localStorage.getItem("medicalReports")) || [];
+
+function displayReports() {
+    let table = document.getElementById("reportTable");
+    table.innerHTML = "";
+
+    reports.forEach((report, index) => {
+        table.innerHTML += `
+            <tr>
+                <td>${index + 1}</td>
+                <td>${report.name}</td>
+                <td>${report.doctor}</td>
+                <td>${report.date}</td>
+                <td>
+                    <button class="btn btn-danger btn-sm" onclick="deleteReport(${index})">Delete</button>
+                </td>
+            </tr>
+        `;
+    });
+}
+
+function addReport() {
+    let name = document.getElementById("reportName").value;
+    let doctor = document.getElementById("doctorName").value;
+    let date = document.getElementById("reportDate").value;
+
+    if(name === "" || doctor === "" || date === "") {
+        alert("Please fill all fields");
+        return;
+    }
+
+    reports.push({ name, doctor, date });
+    localStorage.setItem("medicalReports", JSON.stringify(reports));
+
+    document.getElementById("reportName").value = "";
+    document.getElementById("doctorName").value = "";
+    document.getElementById("reportDate").value = "";
+
+    displayReports();
+}
+
+function deleteReport(index) {
+    reports.splice(index, 1);
+    localStorage.setItem("medicalReports", JSON.stringify(reports));
+    displayReports();
+}
+
+displayReports();
+</script>
+
+</body>
+</html>

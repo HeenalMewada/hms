@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Settings</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light" id="body">
+
+<div class="container mt-4">
+    <h4 class="mb-4">⚙️ Settings</h4>
+
+    <div class="card">
+        <div class="card-body">
+
+            <!-- Language -->
+            <div class="mb-3">
+                <label class="form-label fw-bold">Language</label>
+                <select class="form-select" id="language">
+                    <option value="en">English</option>
+                    <option value="hi">Hindi</option>
+                </select>
+            </div>
+
+            <!-- Theme -->
+            <div class="mb-3">
+                <label class="form-label fw-bold">Theme</label>
+                <select class="form-select" id="theme">
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                </select>
+            </div>
+
+            <!-- Date Format -->
+            <div class="mb-3">
+                <label class="form-label fw-bold">Date Format</label>
+                <select class="form-select" id="dateFormat">
+                    <option value="dd-mm-yyyy">DD-MM-YYYY</option>
+                    <option value="mm-dd-yyyy">MM-DD-YYYY</option>
+                    <option value="yyyy-mm-dd">YYYY-MM-DD</option>
+                </select>
+            </div>
+
+            <button class="btn btn-primary" onclick="saveSettings()">
+                Save Settings
+            </button>
+
+        </div>
+    </div>
+</div>
+<div class="container mt-5">
+    <h3 class="mb-4">Account & Security</h3>
+
+    <!-- Change Password -->
+    <div class="card mb-4">
+        <div class="card-header fw-bold">🔑 Change Password</div>
+        <div class="card-body">
+            <input type="text" class="form-control mb-2" placeholder="Your Name" id="name">
+            <input type="password" class="form-control mb-2" placeholder="Current Password" id="currentPassword">
+
+            <div class="error"></div>
+            <input type="password" class="form-control mb-2" placeholder="New Password" id="newPassword">
+            <div class="error"></div>
+            <input type="password" class="form-control mb-3" placeholder="Confirm Password" id="confirmPassword">
+            <div class="error"></div>
+            <button class="btn btn-primary" onclick="changePassword()">Update Password</button>
+        </div>
+    </div>
+
+    
+
+    <!-- Logout All Devices -->
+    <div class="card">
+        <div class="card-header fw-bold">🚪 Logout from All Devices</div>
+        <div class="card-body">
+            <p class="text-danger">This will log you out from all devices.</p>
+            <button class="btn btn-danger" onclick="logoutAll()">Logout Everywhere</button>
+        </div>
+    </div>
+
+</div>
+<script>
+
+
+function toggle_emoji(event) {
+        let toggleBtn = document.getElementById("toggleBtn");
+        let currentPassword = document.getElementById("currentPassword");
+        if (currentPassword.type === "password") {
+            currentPassword.type = "text";
+            toggleBtn.textContent = "🙈";
+        } else {
+            currentPassword.type = "password";
+            toggleBtn.textContent = "🐵";
+        }
+    }
+
+function saveSettings() {
+    let lang = document.getElementById("language").value;
+    let theme = document.getElementById("theme").value;
+    let dateFormat = document.getElementById("dateFormat").value;
+
+    // save in browser (for demo)
+    localStorage.setItem("language", lang);
+    localStorage.setItem("theme", theme);
+    localStorage.setItem("dateFormat", dateFormat);
+
+    applyTheme(theme);
+
+    alert("Settings saved!");
+}
+
+// Apply theme
+function applyTheme(theme) {
+    if (theme === "dark") {
+        document.body.classList.remove("bg-light");
+        document.body.classList.add("bg-dark", "text-white");
+    } else {
+        document.body.classList.remove("bg-dark", "text-white");
+        document.body.classList.add("bg-light");
+    }
+}
+
+// Load saved settings
+window.onload = () => {
+    let theme = localStorage.getItem("theme");
+    if (theme) applyTheme(theme);
+};
+
+
+function changePassword() {
+    let name= document.getElementById("name").value;
+    let current = document.getElementById("currentPassword").value;
+    let newPass = document.getElementById("newPassword").value;
+    let confirm = document.getElementById("confirmPassword").value;
+
+    if (!current || !newPass || !confirm) {
+        alert("All fields are required");
+        return;
+    }
+
+    if (newPass.length < 8) {
+        alert("Password must be at least 8 characters");
+        return;
+    }
+
+    if (newPass !== confirm) {
+        alert("Passwords do not match");
+        return;
+    }
+
+    fetch("http://localhost:8080/doctor/settings/change-password", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+        name: name,
+        currentPassword: current,
+        newPassword: newPass
+    })
+})
+.then(res => res.json())
+  .then(result => alert(result.message))
+  .catch(err => console.log(err));
+};
+
+
+
+</script>
+
+</body>
+</html>
